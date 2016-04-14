@@ -1,0 +1,368 @@
+ROUTINE ppf
+LoadPatentData
+ // calling syntax:  do LoadPatentData^ppf
+ // LoadPatentData does the following:
+ //   1. delete patent data staging global, ^patentD
+ //   2. delete existing patent application table
+ //   3. create patent application table
+ //   4. parse patent data files, loading only the patents matching a desired patent category into ^patentD
+ //   5. load patent application table from ^patentD
+ //
+ // 
+ //wipe everything
+ //kill staging global that the patent files get parsed into
+ w !,"deleting staging global, patentD"
+ kill ^patentD
+ w !,"deleting patent application tables"
+ d DeletePatentApplicationTable^ppf
+ //create patent.application table
+ w !,"creating patent.application table"
+ d CreatePatentApplicationTable^ppf
+ //load the patent data files into ^patentD
+ // 1976
+ w !,"loading 1976"
+ d Load^ppf("c:\patent\1976\p005.txt")
+ d Load^ppf("c:\patent\1976\p012.txt")
+ d Load^ppf("c:\patent\1976\p019.txt")
+ d Load^ppf("c:\patent\1976\p106.txt")
+ d Load^ppf("c:\patent\1976\p130.txt")
+ d Load^ppf("c:\patent\1976\p207.txt")
+ d Load^ppf("c:\patent\1976\p214.txt")
+ d Load^ppf("c:\patent\1976\p221.txt")
+ d Load^ppf("c:\patent\1976\p228.txt")
+ d Load^ppf("c:\patent\1976\p427.txt")
+ d Load^ppf("c:\patent\1976\p608.txt")
+ d Load^ppf("c:\patent\1976\p810.txt")
+ d Load^ppf("c:\patent\1976\p817.txt")
+ d Load^ppf("c:\patent\1976\p831.txt")
+ d Load^ppf("c:\patent\1976\p928.txt")
+ //1977
+  w !,"loading 1977"
+ d Load^ppf("c:\patent\1977\p220.txt")
+ d Load^ppf("c:\patent\1977\p322.txt")
+ d Load^ppf("c:\patent\1977\p628.txt")
+ d Load^ppf("c:\patent\1977\p104.txt")
+ d Load^ppf("c:\patent\1977\p524.txt")
+ d Load^ppf("c:\patent\1977\p011.txt")
+ //1978
+  w !,"loading 1978"
+ d Load^ppf("c:\patent\1978\p815.txt")
+ d Load^ppf("c:\patent\1978\p221.txt")
+ d Load^ppf("c:\patent\1978\p425.txt")
+ d Load^ppf("c:\patent\1978\p627.txt")
+ //1979
+  w !,"loading 1979"
+ d Load^ppf("c:\patent\1979\p218.txt")
+ d Load^ppf("c:\patent\1979\p424.txt")
+ d Load^ppf("c:\patent\1979\p206.txt")
+ //1980
+ w !,"loading 1980"
+ d Load^ppf("c:\patent\1980\p007.txt")
+ d Load^ppf("c:\patent\1980\p014.txt") 
+ d Load^ppf("c:\patent\1980\p021.txt")
+ d Load^ppf("c:\patent\1980\p028.txt")
+ d Load^ppf("c:\patent\1980\p101.txt")
+ d Load^ppf("c:\patent\1980\p104.txt") 
+ d Load^ppf("c:\patent\1980\p111.txt")
+ d Load^ppf("c:\patent\1980\p118.txt")
+ d Load^ppf("c:\patent\1980\p125.txt") 
+ d Load^ppf("c:\patent\1980\p202.txt")
+ d Load^ppf("c:\patent\1980\p209.txt")
+ d Load^ppf("c:\patent\1980\p216.txt")
+ d Load^ppf("c:\patent\1980\p219.txt") 
+ d Load^ppf("c:\patent\1980\p223.txt")
+ d Load^ppf("c:\patent\1980\p230.txt")
+ d Load^ppf("c:\patent\1980\p506.txt") 
+ d Load^ppf("c:\patent\1980\p603.txt")
+ d Load^ppf("c:\patent\1980\p729.txt")
+ d Load^ppf("c:\patent\1980\p916.txt")
+ d Load^ppf("c:\patent\1980\p923.txt") 
+ d Load^ppf("c:\patent\1980\p930.txt")  
+ //1981
+  w !,"loading 1981"
+ d Load^ppf("c:\patent\1981\p428.txt")
+ d Load^ppf("c:\patent\1981\p106.txt")
+ d Load^ppf("c:\patent\1981\p526.txt")
+ d Load^ppf("c:\patent\1981\p124.txt")
+ //1982
+  w !,"loading 1982"
+ d Load^ppf("c:\patent\1982\p105.txt")
+ d Load^ppf("c:\patent\1982\p207.txt")
+ d Load^ppf("c:\patent\1982\p221.txt")
+ d Load^ppf("c:\patent\1982\p228.txt")
+ //1983
+  w !,"loading 1983"
+ d Load^ppf("c:\patent\1983\p230.txt")
+ d Load^ppf("c:\patent\1983\p227.txt")
+ d Load^ppf("c:\patent\1983\p913.txt")
+ //1984
+  w !,"loading 1984"
+ d Load^ppf("c:\patent\1984\p225.txt")
+ d Load^ppf("c:\patent\1984\p424.txt")
+ d Load^ppf("c:\patent\1984\p306.txt")
+ d Load^ppf("c:\patent\1984\p515.txt")
+ //1985
+  w !,"loading 1985"
+ d Load^ppf("c:\patent\1985\p122.txt")
+ d Load^ppf("c:\patent\1985\p709.txt")
+ d Load^ppf("c:\patent\1985\p209.txt")
+ d Load^ppf("c:\patent\1985\p507.txt")
+ //1986
+  w !,"loading 1986"
+ d Load^ppf("c:\patent\1986\p128.txt")
+ d Load^ppf("c:\patent\1986\p216.txt")
+ d Load^ppf("c:\patent\1986\p230.txt")
+ d Load^ppf("c:\patent\1986\p520.txt")
+ //1987
+  w !,"loading 1987"
+ d Load^ppf("c:\patent\1987\p106.txt")
+ d Load^ppf("c:\patent\1987\p113.txt") 
+ d Load^ppf("c:\patent\1987\p317.txt")
+ d Load^ppf("c:\patent\1987\p331.txt")
+ d Load^ppf("c:\patent\1987\p407.txt")
+ d Load^ppf("c:\patent\1987\p414.txt") 
+ d Load^ppf("c:\patent\1987\p512.txt")
+ //1990
+  w !,"loading 1990"
+ d Load^ppf("c:\patent\1990\p106.txt")
+ d Load^ppf("c:\patent\1990\p306.txt")
+ d Load^ppf("c:\patent\1990\p327.txt") 
+ d Load^ppf("c:\patent\1990\p626.txt")
+ d Load^ppf("c:\patent\1990\p703.txt")
+ d Load^ppf("c:\patent\1990\p828.txt") 
+ //load ^patentD into the SQL table
+  w !,"inserting ^patentD into patent.application table"
+ do LoadPatentApplicationTable^ppf
+ w !,"finished."
+ &sql(select count(patentnumber) into :numPatents from patent.application)
+ w !,$g(numPatents)," patents loaded."
+ // comment the next line if you want to keep the staging global
+ //kill ^patentD
+ quit
+ //
+ // d Load^ppf("c:\patent\pftaps19760106.txt")
+ //
+Load(filename)
+    // we only want certain categories of patents: "ART unit"
+    set lARTunitCodes=$lb(242,246,323,333,334,342)
+    // within those ART units are particular subcategories (e.g., Dentistry, Agriculture) we want
+    set lARTunitKeywords(242)=$lb("clean")  //cleaning apparatus
+    set lARTunitKeywords(246)=$lb("device","tool","gage","measur")  //instrument
+    set lARTunitKeywords(323)=$lb("wrench","tool","hammer","axe","screwdriver")  //tool
+    set lARTunitKeywords(333)=$lb("animal","pig","horse","dog","cat","cow","calf","foal")  //agriculture
+    set lARTunitKeywords(334)=$lb("game","puzzle","tennis","football","baseball","basketball","soccer")  //game
+    set lARTunitKeywords(342)=$lb("combustion engine") //combustion engine
+    // each patent within the patent data files is organized as a set of fields within "Logical Groups" 
+    //    Logical Groups always appear in a specific order
+    // open and the patent data file
+    //   NOTE:  this methodology only works with the older patent data space-formatted files; newer patent data fils are XML
+    Set stream=##class(%Stream.FileCharacter).%New()
+	Set sc=stream.LinkToFile(filename)
+	// read the entire file, processing one patent at a time
+	While 'stream.AtEnd {
+	  Set line=stream.ReadLine(),nLine=$i(nLine)
+	  // the first logical group of each patent entry is always "PATN"
+	  if line="PATN" {
+	   // read the patent info into an array, then hunt through the array for the data we need for this patent
+	   kill patent
+	   set i=1,currentLogicalGroup="PATN",currentField="",patent(currentLogicalGroup)=nLine
+	   do {
+		   s nLine=$i(nLine),line=stream.ReadLine()
+		   // the format of these particular patent files has patent data section tags begin in column one. 
+		   // Everything else is indented with spaces. 
+		   // if the line begins with a 4-character label, we have reached a new logical group
+		   // if the line begins with a 3-character label, we are reached a new field within a logical group
+		   // otherwise, we are reading a line within a field within a logical group 
+		   //
+		   s strLabelTest=$zstrip($e(line,1,4),"*CWP")
+		   if (strLabelTest'="") {
+			   if $l(strLabelTest)=4 {
+				   set currentLogicalGroup=strLabelTest
+				   set patent(currentLogicalGroup)=nLine
+				   //w !,"new logical group: "_strLabelTest
+			   }
+			   elseif $l(strLabelTest)=3 {
+				   set currentField=strLabelTest
+				   // fields are always subcomponents of logical groups
+				   if $g(currentLogicalGroup)="" {
+				      w !,"Error reading logical group."
+				   }
+				   else {
+					  set patent(currentLogicalGroup,currentField,nLine)=$zstrip($e(line,6,*),"<=>CW")
+				     //w !,"field within "_currentLogicalGroup_":  "_currentField
+			       }
+			   }
+			   else {
+				   //should never reach here
+				   write !,"Unexpected label found on line "_nLine
+			   }
+		   }
+		   else {
+			   //strip off control characters
+			   //if non-empty string, save it as a line within a field within a logical group
+			   if line'="" set patent(currentLogicalGroup,currentField,nLine)=$zstrip(line,"<=>CW")   
+		   }
+       }WHILE (('stream.AtEnd)&&(line'="PATN"))                     
+       /* 
+          now that we have read the data for one patent into an array, save the fields we want to load into a SQL table.       
+          Patent data field name definitions taken from PatentFullTextAPSGreenBook-Documentation.pdf.  
+          
+          We want the following fields from the logical groups listed below:
+          
+           PATN logical group
+             WKU:  patent number, a unique patent identifier that will also be used as SQL primary key.  
+             ART:  patent art unit:  Patents are organized into technological centers; each technology center is subdivided into Art Units
+             TTL:  title of invention
+             ISD:  patent issue date (yyyymmdd)
+             
+           INVT logical group  
+             NAM:  inventor name
+             
+           LREP logical group  
+             FRM:  legal firm name
+             
+           ABST logical group
+             PAL <multiple>:  patent abstract paragraphs
+             
+           BSUM logical group
+             PAR <multiple>:  summary description of the invention
+             
+           DETD logical group  
+             PAR <multiple>:  detailed technical description of the invention
+       */
+       //if this patent is the type of ART unit we want
+              
+	   s ART=@($query(patent("PATN","ART","")))
+	   if $lf(lARTunitCodes,ART){
+		  set WKU=@($query(patent("PATN","WKU","")))
+		  // the descriptive text fields are multiple lines
+	      //   ABST:PAL
+	      set key=$o(patent("ABST","PAL","")),text=""
+	      while key'=""
+	      {
+		      set text=text_$zstrip((patent("ABST","PAL",key)),"<=>CW")_" "
+		      set key=$o(patent("ABST","PAL",key))
+	      }
+	      set tAbstract=$zstrip(text,"<=>W"),fKeywordMatch=0
+		  // to categorize these, check to see if this patent's abstract contains a keyword we want
+	      for key=1:1:$ll(lARTunitKeywords(ART))
+	      {
+		      if tAbstract[$lg(lARTunitKeywords(ART),key){ 
+		         //w !,"ART: ",ART,":"," matching keyword: ",$lg(lARTunitKeywords(ART),key)
+		         s fKeywordMatch=1
+		         quit
+		      }
+	      }
+		  if fKeywordMatch{
+	        set ^patentD(WKU)=""
+	        set ^patentD(WKU,"ART")=ART  
+	        set ^patentD(WKU,"TTL")=@($query(patent("PATN","TTL","")))
+	        set ^patentD(WKU,"ISD")=@($query(patent("PATN","ISD","")))
+	        set ^patentD(WKU,"NAM")=@($query(patent("INVT","NAM","")))
+	        set ^patentD(WKU,"FRM")=@($query(patent("LREP","FRM","")))
+            set ^patentD(WKU,"ABST")=tAbstract
+	        //   BSUM:PAR
+	        set key=$o(patent("BSUM","PAR","")),text=""
+	        while key'=""
+	        {
+		      set text=text_$zstrip((patent("BSUM","PAR",key)),"<=>CW")_" "
+		      set key=$o(patent("BSUM","PAR",key))
+	        }
+	        set ^patentD(WKU,"BSUM")=$zstrip(text,"<=>W")
+	        //   DETD:PAR
+	        set key=$o(patent("DETD","PAR","")),text=""
+	        while key'=""
+	        {
+		      set text=text_$zstrip((patent("DETD","PAR",key)),"<=>CW")_" "
+		      set key=$o(patent("DETD","PAR",key))
+	        }
+	        set ^patentD(WKU,"DETD")=$zstrip(text,"<=>W")
+		  } //closing block:  if abstract contains any of the desired keywords
+	   } //closing block: if ART unit is in list of desirable art unit codes.
+	  }  //closing block: if line="PATN"
+    }  // closing while loop: while 'stream.AtEnd
+    quit
+LoadPatentApplicationTable
+    // do LoadPatentApplicationTable^ppf
+    s patKey=$o(^patentD(""))
+    while patKey'="" {
+	   //if first character of PatentNumber is zero, change it to Z
+	   if $e(patKey,1)="0" set PatentNumber="Z"_$e(patKey,2,*)
+	   else  set PatentNumber=patKey
+	   set Category=^patentD(patKey,"ART")
+	   set Title=^patentD(patKey,"TTL")
+	   set IssueDate=$zdh(^patentD(patKey,"ISD"),8)
+	   set InventorName=^patentD(patKey,"NAM")
+	   set LegalFirmName=^patentD(patKey,"FRM")
+	   set Abstract=^patentD(patKey,"ABST")
+	   set SummaryDescription=^patentD(patKey,"BSUM")
+	   set DetailedDescription=^patentD(patKey,"DETD")
+	   set PatentStatus="Issued"
+
+	   &sql(INSERT INTO Patent.Application (PatentNumber,Status,Category,Title,IssueDate,InventorName,LegalFirmName,Abstract,SummaryDescription,DetailedDescription) VALUES (:PatentNumber,:PatentStatus,:Category,:Title,:IssueDate,:InventorName,:LegalFirmName,:Abstract,:SummaryDescription,:DetailedDescription))
+	   IF SQLCODE=0 {WRITE !,"Row ID of last record inserted=",%ROWID }
+       ELSE {WRITE !,"Insert failed, SQLCODE=",SQLCODE }
+       set patKey=$o(^patentD(patKey))
+    }
+    quit
+CreatePatentApplicationTable
+  &sql(CREATE TABLE Patent.Application (
+  PatentNumber  CHAR(25) NOT NULL,
+  Title  CHAR(500) NOT NULL,
+  IssueDate   DATE NOT NULL,
+  InventorName CHAR(500),
+  LegalFirmName CHAR(500),
+  Abstract VARCHAR(32767),
+  SummaryDescription VARCHAR(32767),
+  DetailedDescription VARCHAR(32767),
+  Status CHAR(25) NOT NULL,
+  CONSTRAINT pkPatentNumber PRIMARY KEY (PatentNumber))
+  )
+  IF SQLCODE=0 {WRITE !,"Patent Application Table created" }
+  ELSEIF SQLCODE=-201 {WRITE !,"Patent Application Table already exists"}
+  ELSE {WRITE !,"CREATE Patent Application TABLE failed. SQLCODE=",SQLCODE }
+  //now, modify the class definition to add a ARTunit property and valuelist
+  Set cdef = ##class(%Dictionary.ClassDefinition).%OpenId("Patent.Application")
+  Set pdef = ##class(%Dictionary.PropertyDefinition).%New("Patent.Application:Category")
+  Set pdef.Type="%String"
+  Set Status=pdef.Parameters.SetAt(",242,246,323,333,334,342","VALUELIST")
+  Set Status=pdef.Parameters.SetAt(",cleaning,instrument,tool,agriculture,game,engine","DISPLAYLIST")
+  Do cdef.Properties.Insert(pdef)
+  set Status=cdef.%Save()
+  set Status=$system.OBJ.Compile("Patent.Application")
+  if '$system.Status.IsError(Status) write !,"Category property successfully added."  else  write !,"Error adding Category property." 
+  quit
+DeletePatentApplicationTable
+  &sql(DROP TABLE Patent.Application)
+  IF SQLCODE=0 {WRITE !,"Table deleted" }
+  ELSEIF SQLCODE=-30 {WRITE !,"Table does not exist"}
+  ELSE {WRITE !,"DROP TABLE failed. SQLCODE=",SQLCODE }    
+  quit  
+SetSomePatentsToNonIssued(numPatentsToChange,patentCategory)
+  // calling syntax:   do SetSomePatentsToNonIssued^ppf(57,334)
+  // for the exercise we don't want all the patents to be 'Issued' status
+  //patent Category:  cleaning,instrument,tool,agriculture,game,engine", VALUELIST = ",242,246,323,333,334,342"
+  //
+  //we will use the original data global that was imported to Patent.Application
+  quit:'$d(^patentD)
+  s kP=$o(^patentD("")),nP=0,outPatents=""
+  while kP'=""
+  {
+	  if (^patentD(kP,"ART")=patentCategory) {
+		 s nP=$i(nP)
+	     if $e(kP,1)="0" {set PatentNumber="Z"_$e(kP,2,*),artPatent(nP)=PatentNumber}
+	     else {set artPatent(nP)=kP }
+	  }
+	  set kP=$o(^patentD(kP))
+  }
+  for nC=1:1:numPatentsToChange
+  {
+	  //find a patent to change
+	  set pPatentNumber=artPatent(($RANDOM(nP)+1))
+	  //update the patent Status field
+      s newStatus=##class(%Library.PopulateUtils).ValueList(",approved,revoked,claim filed,in review,pending,in dispute,under appeal")
+      &sql(UPDATE Patent.Application (Status) VALUES (:newStatus) WHERE PatentNumber=:pPatentNumber)
+  }
+  //Part 0 exercise uses Patent Number Z39304760 so make sure its status is "under appeal"
+  &sql(UPDATE Patent.Application (Status) VALUES ('under appeal') WHERE PatentNumber='Z39304760')
+  quit

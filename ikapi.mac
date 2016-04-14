@@ -1,0 +1,151 @@
+ROUTINE ikapi
+ikapi
+  //
+  //do ##Class(%Library.RoutineMgr).GetWebServerPort(.tPort,.tServer,.tURLPrefix,.tURL)
+	//	write !,"All done.",!!,"You can access the Aviation Investigator sample application at",!,tURL_"csp/samples/Aviation.UI.Investigator.zen",!
+  //
+  //
+  //
+  //  want to call http://104.197.189.203:27957/api/iKnow/v1/iknowexp/domain/PatentAbstract/sources
+  /*
+  do ##Class(%Library.RoutineMgr).GetWebServerPort(.tPort,.tServer,.tURLPrefix,.tURL)
+  Set httprequest=##class(%Net.HttpRequest).%New()
+  Set httprequest.Server=$p($p(tURL,"/",3),":",1)
+  Set httprequest.Port=tPort
+  w !,httprequest.Server,!,httprequest.Port
+  Do httprequest.Get("api/iKnow/v1/iknowexp/domain/PatentAbstract/domains")
+  Do httprequest.HttpResponse.OutputToDevice()
+  */
+  set domainName="NonIssuedPatents",domainId=""
+  write #
+  // Step1 was to launch this application by typing do ^ikapi
+  READ !,"Welcome to the iKnow API tour.  Please press any key to continue to the second step.",*anyKey
+  write #
+  do Step2
+  READ !,!,"Step 2 is complete.  Press any key to continue to the next step.  ",*anyKey
+  write #,!,"As you continue along the steps, please use the instruction step navigator in the pane above to see a review of each step."
+  READ !,!,"Press any key to continue.",*anyKey
+  write #
+  do Step3
+  write !,!,"Step 3 is complete."
+  READ !,!,"Press any key to continue.",*anyKey
+  write #
+  do Step4
+  write !,!,"Step 4 is complete."
+  READ !,!,"Press any key to continue.",*anyKey
+  write #
+  do Finale
+  write #
+  write !,"Thank you for touring the iKnow API."
+  write !,!,"You will find more information about iKnow in the product documentation as well as online learning at intersystems.com"
+  write !,!,"Please use the selector in the pane above to continue to the next part of the iKnow Experience Lab.",!,!
+  quit
+Step4
+  write !,"*** STEP 4:  iKnow RESTful Web Services ***"
+  write !,!,"In addition to the server-side ObjectScript API provided for iKnow, RESTful web services are also available"
+  write !,"for performing CRUD operations on iKnow domains. The service includes a UrlMap that associates the REST call"
+  write !,"with the method that implements the service:  As a developer, you need only define a CSP web application" 
+  write !,"and format your url such that the route to the resource calls the iKnow REST service you want to execute."
+  write !,"For example, to get basic information about all the defined domains,"
+  write !,"the route to the resource must conclude with ""/domains""  For example:"
+  do ##Class(%Library.RoutineMgr).GetWebServerPort(.tPort,.tServer,.tURLPrefix,.tURL)
+  set httprequest=##class(%Net.HttpRequest).%New(),httprequest.Server=$p($p(tURL,"/",3),":",1),httprequest.Port=tPort
+  set url="api/iKnow/v1/iknowexp/domains"
+  write !,"    GET <server>/",url
+  READ !,!,"Press any key to call the REST service that will list the defined domains.",*anyKey
+  write !,!,"Response from REST call:",!
+  do httprequest.Get(url)
+  do httprequest.HttpResponse.Data.OutputToDevice()
+  READ !,!,"Let's see some more complex examples!  Press any key to continue.",*anyKey
+  write #,!,"To get the sources in the ",domainName," domain, the route"
+  write !,"to the resource must conclude with ""/domain/:domain/sources""  For example:"
+  do ##Class(%Library.RoutineMgr).GetWebServerPort(.tPort,.tServer,.tURLPrefix,.tURL)
+  set httprequest=##class(%Net.HttpRequest).%New(),httprequest.Server=$p($p(tURL,"/",3),":",1),httprequest.Port=tPort
+  set url="api/iKnow/v1/iknowexp/domain/"_domainName_"/sources"
+  write !,"    GET <server>/",url
+  READ !,!,"Press any key to call the REST service.",*anyKey
+  write !,!,"Response from REST call:",!
+  Do httprequest.Get(url)
+  do httprequest.HttpResponse.Data.OutputToDevice()
+  READ !,!,"Press any key to try the next REST service.",*anyKey
+  write #,!,"To get the entities in the ",domainName," domain that are similar to the entity 'ball'"
+  write !,"the route to the resource must conclude with ""/domain/:domain/entities/:entity/similar""  For example:"
+  set url="api/iKnow/v1/iknowexp/domain/"_domainName_"/entities/ball/similar"
+  write !,"    GET <server>/",url
+  READ !,!,"Press any key to call the REST service that will return entities that are similar to a given entity, ""ball"".",*anyKey
+  write !,!,"Response from REST call:",!
+  Do httprequest.Get(url)
+  do httprequest.HttpResponse.Data.OutputToDevice()
+  READ !,!,"Let's do one more REST example.  Press any key to continue.",*anyKey
+  write #,!,"To get the entities in the ",domainName," domain that have a CRC relationship with a given entity, ""ball"""
+  write !,"the route to the resource must conclude with ""/domain/:domain/crcs/by/entity/:entity""  For example:"
+  set url="api/iKnow/v1/iknowexp/domain/"_domainName_"/crcs/by/entity/ball"
+  write !,"    GET <server>/",url
+  READ !,!,"Press any key to call the REST service that will return CRCs for ""ball"".",*anyKey
+  write !,!,"Response from REST call:",!
+  Do httprequest.Get(url)
+  do httprequest.HttpResponse.Data.OutputToDevice()
+  quit    
+Step3  
+  write !,"*** STEP 3:  Managing domains ***"
+  write !,!,"In the previous step, we used the API to create a new iKnow domain.  The API also"
+  write !,"includes methods for modifying, indexing and destroying domains."
+  write !,!,"We want our iKnow domain to contain the abstracts of game patents that have not been issued, grouped by patent category."
+  write !,!,"While you are reading this, iKnow has been busy indexing the patent texts in our iKnow domain, using the following method:"
+  write !,"    do $system.iKnow.IndexTable(""",domainName,""",""Patent.Application"",""PatentNumber"",""Category"",""Abstract"",,""Status!='Issued' AND Category=334"")"
+  do $system.iKnow.IndexTable(domainName,"Patent.Application","PatentNumber","Category","Abstract",,"Status!='Issued' AND Category=334")
+  write !,!,"iKnow indexing complete!"
+  write !,!,"Now that the domain has been indexed, we can query the domain.  For example,"
+  write !,"to count the number of sources in our domain ",domainName," execute the following command:"
+  write !,"    set tNumberOfSources=##class(%iKnow.Queries.SourceQAPI).GetCountByDomain(domainId)"
+  set tNumberOfSources=##class(%iKnow.Queries.SourceQAPI).GetCountByDomain(domainId)
+  write !,!,"Executing this command with the ",domainName," domain returns ",tNumberOfSources," sources."
+  READ !,!,"Press any key to continue. ",*anyKey
+  write #,!,"We can query the contents of the domain by executing iKnow queries such as:"
+  write !,"    ##class(%iKnow.Queries.EntityAPI).GetTop(.result,domainId,1,5)"
+  write !,"to get the top 5 entities (ranked by frequency and spread) in this domain."
+  write !,!,"The top 5 entities in ",domainName," are:"
+  do ##class(%iKnow.Queries.EntityAPI).GetTop(.result,domainId,1,5)
+  write !
+  set i=1
+  WHILE $DATA(result(i)) {
+         set outstr = $LISTTOSTRING(result(i),",",1),entity = $PIECE(outstr,",",2),freq = $PIECE(outstr,",",3),spread = $PIECE(outstr,",",4)
+       WRITE "    [",entity,"] appears ",freq," times in ",spread," sources.",!
+       SET i=i+1 }
+   quit  
+Step2
+  write !,"*** STEP 2:  Create a new domain ***"
+  write !,!,"We will create the """,domainName,""" domain of patents"
+  write !,"and include only game patents which have not been issued."
+  write !,!,"Before we create the domain, we will execute the following command to"
+  write !,"check if the domain already exists:"
+  write !,"    set fExists = ##class(%iKnow.Domain).NameIndexExists(""",domainName,""")"
+  write !,!,"If the domain does not already exist, we can instantiate and" 
+  write !,"save a new domain as follows:"
+  write !,"    set tDomain = ##class(%iKnow.Domain).%New(""",domainName,""")"
+  write !,"    set tSC = tDomain.%Save()"
+  write !,!,"Press any key to execute this code that creates the ",domainName," domain."
+  READ *anyKey
+  if '##class(%iKnow.Domain).NameIndexExists(domainName) {
+     set tDomain = ##class(%iKnow.Domain).%New(domainName)
+	 set tSC = tDomain.%Save()
+	 if $system.Status.IsOK(tSC) {write !,!,domainName," domain successfully created."} else {  write !,!,"error creating ",domainName}
+  }
+  else {write !,!,domainName," already exists."}
+  set domainId=$system.iKnow.GetDomainId(domainName) 
+  write !,!,"Once the domain has been created, the domain object Id can be retrieved by calling the following:",!,"    $system.iKnow.GetDomainId(""",domainName,""")" 
+  write !,!,"The domain Id (we'll refer to it hereafter as ""domainId"") of your new domain is: ",$g(domainId)
+  quit  
+Finale
+  write !,"*** Final Step:  Destroy the domain ***"
+  write !,!,"Our last step is to delete the domain we created in the first step.  First, we destroy the contents of the domain:"
+  write !,"    $system.iKnow.DropData(""",domainName,""",pDropMetadataFields,pDropDictionaries)"
+  write !,"to drop ",domainName,"'s index data, metadata fields (optional) and dictionary (optional)."
+  write !,!,"Alternatively, the DropData instance method of %iKnow.Domain gives you all possible choices for what data gets dropped:"   
+  write !,"    ##class(%iKnow.Domain).DropData(dropMetadataDefinitions, dropDictionaries, dropTempGlobals, dropBlackLists, dropMetricDefinitions)"
+  write !,!,"Once the domain data is dropped, we end our iKnow API tour by destroying the domain object:"
+  write !,"    do ##class(%iKnow.Domain).%DeleteId(domainId)"
+  READ !,!,"Press any key to drop the domain data then delete the domain and exit this exercise.",*anyKey
+  do $system.iKnow.DropData(domainName)
+  do ##class(%iKnow.Domain).%DeleteId(domainId)
+  quit
